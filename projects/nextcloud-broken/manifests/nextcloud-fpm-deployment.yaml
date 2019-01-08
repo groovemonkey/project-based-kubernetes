@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud-fpm-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextcloud
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - name: nextcloud-fpm
+          image: nextcloud:fpm
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          volumeMounts:
+            - name: nextcloud-config
+              mountPath: /var/www/html/config
+            - name: nextcloud-data
+              mountPath: "/data"
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: mysql-username.txt
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: mysql-pass.txt
+            - name: MYSQL_DATABASE
+              value: nextcloud
+            - name: MYSQL_HOST
+              value: mysql.default.svc.cluster.local
+      volumes:
+        - name: nextcloud-config
+          configMap:
+            name: nextcloud-config
+            items:
+              - key: nextcloud.conf
+                path: nextcloud.conf
+        - name: nextcloud-data
+          persistentVolumeClaim:
+            claimName: nextcloud-volume

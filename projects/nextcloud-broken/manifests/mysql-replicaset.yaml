@@ -1,0 +1,46 @@
+---
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: mysql
+  # labels so that we can bind a Service to this Pod
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: database
+        image: mysql:5.7
+        resources:
+          requests:
+            memory: 1Gi
+        args:
+          # We need this to prevent mysql from throwing up -- our DO volume will be mounted here
+          - "--ignore-db-dir=lost+found"
+        env:
+        # Use a secret, avoid having plaintext passwords all over your configs
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-rootpass
+              key: mysql-rootpass.txt
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+        ports:
+          - containerPort: 3306
+        volumeMounts:
+          - name: mysql-data
+            mountPath: "/var/lib/mysql"
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-volume
