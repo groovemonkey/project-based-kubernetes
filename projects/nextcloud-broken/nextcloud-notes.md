@@ -2,6 +2,10 @@
 
 https://github.com/nextcloud/docker
 
+BESTFIX: Create shared storage for multiple pods from a RWO volume (like DO supports):
+    https://github.com/kubernetes-incubator/external-storage/tree/master/nfs
+
+
 BORINGFIX: move fpm and nginx containers into a single pod, together. Storage is shared.
 
 BORINGFIX: run this as a singleton (replicaset with 1 replica) using the apache container (instead of php-fpm) and it should work.
