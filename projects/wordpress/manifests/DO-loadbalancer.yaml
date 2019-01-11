@@ -1,0 +1,18 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: wordpress
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
+  labels:
+    app: wordpress-deployment
+spec:
+  type: LoadBalancer
+  selector:
+    app: wordpress-deployment
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80

@@ -85,7 +85,7 @@ name: tl-testcluster
 - https://cloud.digitalocean.com/settings/api/tokens (k8s-tutorial)
 
 # Set up authentication
-    export DIGITALOCEAN_ACCESS_TOKEN=c6f24442fb116a2bd185f5efba82f2fb80be5749657952892e6a624c48b50a5f
+    export DIGITALOCEAN_ACCESS_TOKEN=your_DO_auth_token_here
     cp releases/secret.yml.tmpl releases/secret.yml
     vim releases/secret.yml # add your token
 
@@ -97,6 +97,11 @@ name: tl-testcluster
 
 ### Apply one of the example deployments to get the DO CCM running
     kubectl apply -f releases/v0.1.8.yml
+
+## Go to the project directory that you want to work with
+    cd projects/wordpress
+    # Follow the instructions in the Project-Instructions.md file!
+
 
 ##########################
 
