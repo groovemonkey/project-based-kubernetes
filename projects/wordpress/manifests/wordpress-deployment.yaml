@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress-deployment
+  name: wordpress
 spec:
   replicas: 1
   selector:
@@ -19,10 +19,6 @@ spec:
           ports:
           - containerPort: 80
             name: wordpress
-          # My reasoning, from a question I asked on the #kubernetes IRC channel:
-          # [12:43] <groovemonkey> Hi all, I'm looking for a way to mount a volume in a container, along with a configfile (from a configmap) at the same mountpoint. It looks like duplicate  mountpoints aren't allowed (I originally thought the mounts would just be applied in order). The error is "Invalid value: "/var/www/html": must be unique"
-          # [12:44] <groovemonkey> the use case is a fairly straightforward wordpress install. I'm mounting a persistent volume for the wp install at /var/www/html, and then trying to add the wp-config.php file via a configmap inside that same directory
-          # [12:45] <groovemonkey> I understand that I could hack around this by mounting the persistent volume at e.g. /var/www and then having the configmap mountpath be /var/www/html, but it just feels really kludgy. Am I missing something?
           volumeMounts:
             - name: wordpress-data
               mountPath: /var/www
@@ -42,38 +38,13 @@ spec:
               value: root
             - name: WORDPRESS_DB_NAME
               value: wordpress
-            # OLD -- keep for troubleshooting only
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db-secrets
-                  key: MYSQL_USER
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-secrets
-                  key: MYSQL_PASSWORD
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: db-secrets
-                  key: MYSQL_DATABASE
-            - name: DB_HOST
-              value: mysql.default.svc.cluster.local
-            # /OLD
       volumes:
         - name: wordpress-data
           persistentVolumeClaim:
-            claimName: wordpress-datavolume
-        - name: wordpress-config
-          configMap:
-            name: wordpress-config
-            items:
-              - key: wp-config.php
-                path: wp-config.php
-        - name: apache-config
-          configMap:
-            name: apache-config
-            items:
-              - key: apache.conf
-                path: apache.conf
+            claimName: wordpress-volume
+        # - name: apache-config
+        #   configMap:
+        #     name: apache-config
+        #     items:
+        #       - key: apache.conf
+        #         path: apache.conf

@@ -1,7 +1,32 @@
 Once you've got your DO kubernetes cluster set up, and your CCM deployment running on it...    
 
+Check out the wordpress docker documentation here: https://hub.docker.com/_/wordpress/
 
-## Mysql Setup
+Pay attention to:
+- environment variables that the container uses (INPUT)
+- which processes run inside the container
+- service ports that are exposed by the container (OUTPUT)
+
+
+### Infrastructure Diagram:
+On the left is a traditional diagram for this 3-tier web application. On the right, you see how each part of that infrastructure maps to kubernetes concepts.
+
+Don't worry if this doesn't make sense at the beginning.
+
+    Some config data            (k8s ConfigMaps and Secrets)
+
+    MySQL Container             (k8s replicaset)
+    MySQL Service               (k8s service)
+        |
+        |
+    WordPress Container         (k8s deployment)
+    [ apache and php-fpm ]
+        |
+        |
+    DO Loadbalancer             (k8s service)
+
+
+## 1. Mysql Setup
 
 Secret files require base64-encoded values if you want to use them in a sane way (--from-file is hopelessly broken with .env files).
 
@@ -27,11 +52,6 @@ Get a shell inside the mysql container, log into mysql, and set up the DB:
     kubectl exec -it mysql-h2nsl -- bash
     mysql -u root -p # use the root password you created earlier  
 
-    CREATE DATABASE IF NOT EXISTS wordpress;
-    CREATE USER 'wordpress'@'10.0.0.0/255.0.0.0' IDENTIFIED BY 'MYSQL_PASSWORD';
-    GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'10.0.0.0/255.0.0.0';
-    FLUSH PRIVILEGES;
-
 Ctrl-d to get back out.
 
 
@@ -45,22 +65,43 @@ Check out what we just created!
     kubectl logs $YOURPOD
 
 
-## Wordpress Setup
+## 2. Wordpress Setup
 
 Edit the config file at configs/apache.conf if you want to use a domain name for your WordPress site.
 
-    kubectl create cm --from-file configs/wp-config.php wordpress-config
-    kubectl create cm --from-file configs/apache.conf apache-config
+    # If you were putting a custom apache config file on your containers, this is the pattern
+    # you would use:
+    # kubectl create cm --from-file configs/apache.conf apache-config
 
     kubectl apply -f manifests/wordpress-datavolume-claim.yaml
     kubectl apply -f manifests/wordpress-deployment.yaml
-    # kubectl apply -f manifests/wordpress-service.yaml # not needed because of DO load balancer service?
 
 Check out the pattern for getting a single config file into a container in wordpress-deployment.yaml. This is currently the best practice. Yuck!
 
 
-
-## Load Balancer Setup
+## 3. Load Balancer Setup
 It's just exposing our app to the Internet, not really load-balancing (because we're running a stateful singleton).
 
     kubectl apply -f manifests/DO-loadbalancer.yaml
+
+
+## Cleanup
+To delete everything and start over, go into your DO dashboard and:
+
+1. Delete the kubernetes cluster
+1. Networking --> Load Balancers --> LB Settings --> Delete
+1. Volumes --> Delete your volumes
+
+
+## Starting from a blank slate:
+In your DO dashboard:
+
+1. Create a new kubernetes cluster
+1. Download the cluster config file (scroll down)
+1. Once `kubectl get nodes` shows your nodes as READY, continue with the next step.
+1. mv ~/Downloads/tl-testcluster-kubeconfig.yaml ~/.kube/config
+1. cd digitalocean-cloud-controller-manager
+1. kubectl apply -f releases/secret.yml
+1. kubectl apply -f releases/v0.1.8.yml
+1. cd $THIS_PROJECT/projects/wordpress/
+1. Start with the MySQL Setup section at the beginning of this document!
