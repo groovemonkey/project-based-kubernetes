@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: http-lb
+  name: nextcloud-lb
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-protocol: "http"
 spec:

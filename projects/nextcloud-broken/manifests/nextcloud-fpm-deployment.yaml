@@ -26,15 +26,12 @@ spec:
               mountPath: "/data"
           env:
             - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: db-user-pass
-                  key: mysql-username.txt
+              value: root
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-user-pass
-                  key: mysql-pass.txt
+                  name: nc-db-rootpass
+                  key: mysql-rootpass.txt
             - name: MYSQL_DATABASE
               value: nextcloud
             - name: MYSQL_HOST
