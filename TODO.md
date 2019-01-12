@@ -1,7 +1,5 @@
 TODO
 
-- Test wordpress project
-
 - Once working, add shared storage for multiple pods from a RWO volume (like DO supports): https://github.com/kubernetes-incubator/external-storage/tree/master/nfs
     - on wordpress project
     - on nextcloud project
@@ -10,8 +8,6 @@ TODO
 - Add mattermost project
 
 - Add mumble project
-
-- namespace all kubernetes object names to include a project prefix (e.g. wp-db-secrets instead of db-secrets) so that students can set up ALL projects side-by-side on the same kubernetes cluster
 
 
 Wordpress:

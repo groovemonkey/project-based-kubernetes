@@ -28,14 +28,14 @@ spec:
         # A nice way to get a whole bunch of values from a k8s secret into a container's  environment variables
         envFrom:
           - secretRef:
-              name: db-secrets
+              name: wp-db-secrets
         ## The old way (one for each value):
         # env:
         # # Use a secret, avoid having plaintext passwords all over your configs
         # - name: MYSQL_ROOT_PASSWORD
         #   valueFrom:
         #     secretKeyRef:
-        #       name: db-secrets
+        #       name: wp-db-secrets
         #       key: MYSQL_ROOT_PASSWORD
         livenessProbe:
           tcpSocket:
