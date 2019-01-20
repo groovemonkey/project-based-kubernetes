@@ -56,61 +56,8 @@ Getting your application architecture to that point is 90% of the battle. Defini
 
 # Practical Project
 
-## Install kubectl:
-
-    sudo apt-get update && sudo apt-get install -y apt-transport-https
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-    sudo apt-get update
-    sudo apt-get install -y kubectl
-
-
-## Clone the DO CCM
-git clone https://github.com/digitalocean/digitalocean-cloud-controller-manager.git
-cd digitalocean-cloud-controller-manager
-
-## Create a cluster?
-1.13.1-do.2
-name: tl-testcluster
-
-## Download config file (bottom of DO screen) (DOES MOVING IT TO 'config' OBVIATE ALL THE --kubeconfig stuff??)
-    mv ~/Downloads/tl-testcluster-kubeconfig.yaml ~/.kube/config
-
-## Ensure cluster version and kubectl version are within 1 minor version of each other
-    kubectl version
-### Test it
-    kubectl get nodes
-
-## Cut a new API token
-- https://cloud.digitalocean.com/settings/api/tokens (k8s-tutorial)
-
-# Set up authentication
-    export DIGITALOCEAN_ACCESS_TOKEN=your_DO_auth_token_here
-    cp releases/secret.yml.tmpl releases/secret.yml
-    vim releases/secret.yml # add your token
-
-## Create the secret
-    kubectl apply -f releases/secret.yml
-
-### Test it
-    kubectl -n kube-system get secrets
-
-### Apply one of the example deployments to get the DO CCM running
-    kubectl apply -f releases/v0.1.8.yml
-
-## Go to the project directory that you want to work with
-    cd projects/wordpress
-    # Follow the instructions in the Project-Instructions.md file!
-
-
-##########################
-
-# Check the dashboard (does this work?)
-kubectl proxy
-- starts up a server running on localhost:8001
-- visit http://localhost:8001/ui
-
-
+1. see 01-kubectl-setup.md
+1. see 02-digitalocean-setup.md
 
 # TODO Video 3: kubectl
 Kubernetes is, like so many other things, a CRUD app. You can
