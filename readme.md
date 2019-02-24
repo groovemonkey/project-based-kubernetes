@@ -226,18 +226,6 @@ Jobs automatically create a unique label (since there are probably a lot of them
 
 
 
-
-## Deployments
-
-Rolling out new versions/release of your code.
-
-
-
-
-
-
-
-
 # DigitalOcean Features
 
 ## Node Labels and Addresses
@@ -252,54 +240,4 @@ https://github.com/digitalocean/digitalocean-cloud-controller-manager/blob/maste
 
 
 
-## Deployments?
-kubectl run
-
-
-
-
 ## REMOVED FROM HERE: 1xx-real-life-k8s-skills--debugging-commands-files.md
-
-
-
-# Or...
-##########################
-# Create a test deployment
-vim dcohen-nginx-deployment.yml
-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: nginx-deployment-example
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          app: nginx-deployment-example
-      template:
-        metadata:
-          labels:
-            app: nginx-deployment-example
-        spec:
-          containers:
-            - name: nginx
-              image: library/nginx
-
-
-
-# Apply it
-kubectl create -f ./dcohen-nginx-deployment.yml 
-
-
-
-
-
-#### TODO
-
-# Security?
-Are our cluster UI and RESTful resources reachable from the Internet?
-
-
-# Helm - package management for Kubernetes
-https://helm.sh/
-

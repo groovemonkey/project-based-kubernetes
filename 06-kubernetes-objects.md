@@ -1,17 +1,15 @@
-videos:
-
-Containers, Pods, Services, Deployments, ReplicaSets, DaemonSets
-
 # Thinking in Kubernetes
 
 Here are the objects we're covering:
+Containers, Pods, ReplicaSets, Services, Secrets, ConfigMaps, Deployments, jobs, DaemonSets
+
 
 1. Pods manage containers
 1. ReplicaSets manage Pods
 1. Services expose pod processes to the outside world
-1. ConfigMaps and Secrets configure Pods
-1. Labels are the plumbing that ties everything together
-1. Deployments manage the change from one set of containers to another (e.g. for a software release)
+1. ConfigMaps and Secrets help you configure Pods
+1. Labels are the plumbing that ties everything together (not covered in detail here)
+1. Deployments manage the change from one set of replicasets/pods to another (e.g. for a software release)
 
 
 # Kubernetes Objects
