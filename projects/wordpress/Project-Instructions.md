@@ -112,10 +112,10 @@ To delete everything and start over, go into your DO dashboard and:
 ## Restarting from a blank slate:
 See ~/02-digitalocean-setup.md, or:
 
-1. In your DO dashboard, create a new kubernetes cluster
+1. In your DO dashboard, create a new 'tl-testcluster' kubernetes cluster
 1. Download the cluster config file (scroll down)
-1. Once `kubectl get nodes` shows your nodes as READY, continue with the next step.
 1. mv ~/Downloads/tl-testcluster-kubeconfig.yaml ~/.kube/config
+1. Once `kubectl get nodes` shows your nodes as READY (~5min), continue with the next step.
 1. cd digitalocean-cloud-controller-manager
 1. kubectl apply -f releases/secret.yml
 1. kubectl apply -f releases/v0.1.8.yml
