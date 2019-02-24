@@ -18,7 +18,7 @@ name: tl-testcluster
     kubectl get nodes
 
 ## Cut a new API token
-- https://cloud.digitalocean.com/settings/api/tokens (k8s-tutorial)
+- https://cloud.digitalocean.com/account/api/tokens (k8s-tutorial)
 
 # Set up authentication
     export DIGITALOCEAN_ACCESS_TOKEN=your_DO_auth_token_here
@@ -35,15 +35,5 @@ name: tl-testcluster
     kubectl apply -f releases/v0.1.8.yml
 
 ## Go to the project directory that you want to work with
-    cd projects/wordpress
+    cd ~/projects/wordpress
     # Follow the instructions in the Project-Instructions.md file!
-
-
-##########################
-
-# Check the dashboard (does this work?)
-kubectl proxy
-- starts up a server running on localhost:8001
-- visit http://localhost:8001/ui
-
-

@@ -1,4 +1,4 @@
-Once you've got your DO kubernetes cluster set up, and your CCM deployment running on it...    
+Once you've got your DO kubernetes cluster set up, and your CCM deployment running on it (see ~/02-digitalocean-setup.md)...
 
 Check out the wordpress docker documentation here: https://hub.docker.com/_/wordpress/
 
@@ -49,8 +49,14 @@ Create your mysql volume and replicaset. Expose this new internal service.
 
 Get a shell inside the mysql container, log into mysql, and set up the DB:
 
-    kubectl exec -it mysql-h2nsl -- bash
-    mysql -u root -p # use the root password you created earlier  
+    kubectl get pods
+    kubectl exec -it mysql-abcde -- bash    # replace mysql-abcde with the actual pod name
+
+    # use the root password you created earlier (secrets/wp-mysql-secrets.yaml)
+    mysql -u root -p
+
+    # In your mysql shell:
+    CREATE DATABASE wordpress;
 
 Ctrl-d to get back out.
 
@@ -85,6 +91,14 @@ It's just exposing our app to the Internet, not really load-balancing (because w
     kubectl apply -f manifests/DO-loadbalancer.yaml
 
 
+## View your work!
+Grab the load balancer's external IP here:
+
+    kubectl get services
+
+You can also see this in your DO dashboard: Networking --> Load Balancers.
+
+
 ## Cleanup
 To delete everything and start over, go into your DO dashboard and:
 
@@ -93,10 +107,10 @@ To delete everything and start over, go into your DO dashboard and:
 1. Volumes --> Delete your volumes
 
 
-## Starting from a blank slate:
-In your DO dashboard:
+## Restarting from a blank slate:
+See ~/02-digitalocean-setup.md, or:
 
-1. Create a new kubernetes cluster
+1. In your DO dashboard, create a new kubernetes cluster
 1. Download the cluster config file (scroll down)
 1. Once `kubectl get nodes` shows your nodes as READY, continue with the next step.
 1. mv ~/Downloads/tl-testcluster-kubeconfig.yaml ~/.kube/config

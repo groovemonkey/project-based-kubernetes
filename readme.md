@@ -546,7 +546,20 @@ Secrets *can* store binary data. If you're defining secrets in YAML files, the d
 
     kubectl get secrets
 
-### Updating
+
+### Viewing a Secret
+To see a secret, use this:
+
+    kubectl get secret wp-db-secrets -o yaml
+
+The secret (in the 'data' section of this yaml output) you're seeing here is base64-encoded, so decode with e.g.
+
+    echo 'THESECRETYOUSEE' | base64 --decode
+
+Ignore the '%' that terminates the output -- 'NGiJi6A46YJTjTx%' is actually 'NGiJi6A46YJTjTx'. Hooray! Now you're looking at the actual stored secret.
+
+
+### Updating a Secret
 When you update secrets, the appropriate files and env vars are updated on running containers. It's up to your application or container process to re-read files and env vars as needed (if things fail, for example). Yes, this couples your application to kubernetes in a small but real way.
 
 
