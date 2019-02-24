@@ -1,5 +1,7 @@
+## Prerequisites
 Once you've got your DO kubernetes cluster set up, and your CCM deployment running on it (see ~/02-digitalocean-setup.md)...
 
+## Notes
 Check out the wordpress docker documentation here: https://hub.docker.com/_/wordpress/
 
 Pay attention to:
