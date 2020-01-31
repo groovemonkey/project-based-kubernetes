@@ -55,6 +55,8 @@ Get a shell inside the mysql container, log into mysql, and set up the DB:
     kubectl exec -it mysql-abcde -- bash    # replace mysql-abcde with the actual pod name
 
     # use the root password you created earlier (secrets/wp-mysql-secrets.yaml)
+    # use the following to decode your password if needed
+    # echo -n YOURBASE64PASSWORD | base64 -d
     mysql -u root -p
 
     # In your mysql shell:

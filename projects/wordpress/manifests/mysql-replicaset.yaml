@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
   name: mysql
@@ -20,8 +20,10 @@ spec:
       - name: database
         image: mysql:5.7
         resources:
+          limits:
+            memory: 512Mi
           requests:
-            memory: 1Gi
+            memory: 256Mi
         args:
           # We need this to prevent mysql from throwing up -- our DO volume will be mounted here
           - "--ignore-db-dir=lost+found"
