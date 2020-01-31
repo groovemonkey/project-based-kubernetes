@@ -120,6 +120,6 @@ See ~/02-digitalocean-setup.md, or:
 1. Once `kubectl get nodes` shows your nodes as READY (~5min), continue with the next step.
 1. cd digitalocean-cloud-controller-manager
 1. kubectl apply -f releases/secret.yml
-1. kubectl apply -f releases/v0.1.8.yml
+1. kubectl apply -f releases/v0.1.21.yml
 1. cd $THIS_PROJECT/projects/wordpress/
 1. Start with the MySQL Setup section at the beginning of this document!
