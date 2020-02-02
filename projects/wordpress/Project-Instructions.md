@@ -55,6 +55,8 @@ Get a shell inside the mysql container, log into mysql, and set up the DB:
     kubectl exec -it mysql-abcde -- bash    # replace mysql-abcde with the actual pod name
 
     # use the root password you created earlier (secrets/wp-mysql-secrets.yaml)
+    # use the following to decode your password if needed
+    # echo -n YOURBASE64PASSWORD | base64 -d
     mysql -u root -p
 
     # In your mysql shell:
@@ -118,6 +120,6 @@ See ~/02-digitalocean-setup.md, or:
 1. Once `kubectl get nodes` shows your nodes as READY (~5min), continue with the next step.
 1. cd digitalocean-cloud-controller-manager
 1. kubectl apply -f releases/secret.yml
-1. kubectl apply -f releases/v0.1.8.yml
+1. kubectl apply -f releases/v0.1.21.yml
 1. cd $THIS_PROJECT/projects/wordpress/
 1. Start with the MySQL Setup section at the beginning of this document!

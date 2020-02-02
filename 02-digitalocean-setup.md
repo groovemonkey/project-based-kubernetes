@@ -5,7 +5,7 @@
     cd digitalocean-cloud-controller-manager
 
 ## Create a cluster?
-1.13.1-do.2
+1.16.2-do.3
 name: tl-testcluster
 
 ## Download config file (bottom of DO screen) (DOES MOVING IT TO 'config' OBVIATE ALL THE --kubeconfig stuff??)
@@ -32,7 +32,7 @@ name: tl-testcluster
     kubectl -n kube-system get secrets
 
 ### Apply one of the example deployments to get the DO CCM running
-    kubectl apply -f releases/v0.1.8.yml
+    kubectl apply -f releases/v0.1.21.yml
 
 ## Go to the project directory that you want to work with
     cd ~/projects/wordpress
