@@ -6,7 +6,7 @@ You'll define two things in the pod manifest:
 1. The volumes that this pod will have available to it.
 1. The actual mounts that you want each of your different containers to have.
 
-
+```python
 apiVersion: v1
 kind: Pod
 metadata:
@@ -26,7 +26,7 @@ metadata:
         - containerPort: 8080
         name: http
         protocol: TCP
-
+```
 
 ## Storage volume types
 You'll most commonly be using a few types, although many more are available:
