@@ -50,4 +50,4 @@ spec:
       volumes:
       - name: mysql-data
         persistentVolumeClaim:
-          claimName: mysql-volume
+          claimName: mysql-volume-claim
